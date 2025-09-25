@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>사람을 던질 순 없으니깐.. 종이를 던지는 거지</title>
+  <style>
+    @font-face {
+      font-family: 'IsYun';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
+      font-weight: normal;
+      font-display: swap;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      background: #fff;
+      font-family: sans-serif;
+    }
+
+    .container {
+      text-align: center;
+      position: relative;
+    }
+
+    #note {
+      width: 400px;
+      height: 369px;
+      background: url("open-note.png") no-repeat center/contain;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'IsYun', sans-serif;
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #333;
+      transition: background-image 0.1s ease;
+    }
+
+    #note.fly-away {
+      animation: fly 1s ease-in forwards;
+    }
+
+    @keyframes fly {
+      0%   { transform: translateY(0) scale(1); opacity: 1; }
+      30%  { transform: translateY(-100px) scale(1.1); }
+      60%  { transform: translateY(0) scale(0.9); }
+      100% { transform: translateX(600px) translateY(-600px) rotate(60deg) scale(0.2); opacity: 0; }
+    }
+
+    #text {
+      max-width: 280px;
+      word-break: break-word;
+      text-align: center;
+    }
+
+    #inputArea {
+      margin-top: 10px;
+    }
+
+    #input {
+      width: 240px;   
+      height: 30px; 
+      font-size: 1.1rem;
+      padding: 5px 10px; 
+    }
+
+    #btn {
+      height: 44px;    
+      padding: 0 15px;  
+      font-size: 1.1rem;  
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="note"><div id="text"></div></div>
+
+    <div id="inputArea">
+      <h2>던지고 싶은 걸 적어 보자 ✍️</h2>
+      <input id="input" type="text" placeholder="과제, 알바, 시험...">
+      <button id="btn">💢</button>
+    </div>
+  </div>
+
+  <script>
+  let note = document.getElementById("note");
+  let text = document.getElementById("text");
+  let input = document.getElementById("input");
+  let btn = document.getElementById("btn");
+  let inputArea = document.getElementById("inputArea");
+
+  input.oninput = function() {
+    text.innerText = input.value;
+  };
+
+  btn.onclick = function() {
+    inputArea.style.display = "none";
+    note.style.backgroundImage = "url('crumpled-note.png')";
+
+    // 애니메이션 실행
+    setTimeout(() => {
+      note.classList.add("fly-away");
+    }, 300);
+  };
+
+  input.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      btn.click();
+    }
+  });
+</script>
+</body>
+</html>
